@@ -1,72 +1,44 @@
 #include <iostream>
 #include <SDL.h>
+#include "src/window.h"
 
-bool gameRunning = false;
-SDL_Window *gameWindow = 0;
-SDL_Renderer *gameRenderer = 0;
-SDL_Texture *someTexture;
-SDL_Rect someRectangle;
-SDL_Rect someRectangle2;
+// TODO: Game Globals to a game state manager
+bool gameRunning = 0;
 
-bool init(const char *title, int xpos, int ypos, int height, int width, int flags)
+void render(SDL_Renderer *renderer)
 {
-  // Initialize SDL
-  if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
-  {
-    gameWindow = SDL_CreateWindow(title, xpos, ypos, height, width, flags);
+  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
-    if (gameWindow != 0)
-    {
-      gameRenderer = SDL_CreateRenderer(gameWindow, -1, 0);
-    }
-  }
-  else
-  {
-    std::cout << "SDL did not initialize\n";
-    return false;
-  }
+  SDL_RenderClear(renderer);
 
-  SDL_Surface *tmpSurface = SDL_LoadBMP("assets/some.bmp");
-  someTexture = SDL_CreateTextureFromSurface(gameRenderer, tmpSurface);
-  SDL_FreeSurface(tmpSurface);
+  // SDL_RenderCopy(gameRenderer, someTexture, &someRectangle, &someRectangle2);
 
-  SDL_QueryTexture(someTexture, NULL, NULL, &someRectangle.w, &someRectangle.h);
-
-  someRectangle.x = 0;
-  someRectangle2.x = 0;
-  someRectangle.y = 0;
-  someRectangle2.y = 0;
-  someRectangle2.w = someRectangle.w;
-  someRectangle2.h = someRectangle.h;
-
-  return true;
-}
-
-void render()
-{
-  SDL_SetRenderDrawColor(gameRenderer, 0, 0, 0, 255);
-
-  SDL_RenderClear(gameRenderer);
-
-  SDL_RenderCopy(gameRenderer, someTexture, &someRectangle, &someRectangle2);
-
-  SDL_RenderPresent(gameRenderer);
+  SDL_RenderPresent(renderer);
 }
 
 int main(int argc, char *argv[])
 {
-  if (init("Game Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN))
+  Window gameWindow(
+      "Ganymede",
+      SDL_WINDOWPOS_CENTERED,
+      SDL_WINDOWPOS_CENTERED,
+      640,
+      480,
+      SDL_WINDOW_SHOWN);
+
+  if (gameWindow.ready)
   {
-    gameRunning = true;
+    gameRunning = 1;
   }
   else
   {
-    std::cout << "Something went wrong initializing this game\n";
-    return 1;
+    std::cout << "Something went wrong launching the game window\n";
   }
 
   while (gameRunning)
   {
-    render();
+    render(gameWindow.renderer);
   }
+
+  return 0;
 }
