@@ -1,5 +1,4 @@
 #include <iostream>
-#include <utility>
 #include <SDL.h>
 #include <SDL_image.h>
 #include "window.h"
@@ -29,5 +28,5 @@ void Window::textureLoader(char *name, char *texture)
   SDL_Texture *newTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
   SDL_FreeSurface(tempSurface);
 
-  textureCache.insert(std::make_pair(name, newTexture));
+  textureCache.insert({name, newTexture});
 }
