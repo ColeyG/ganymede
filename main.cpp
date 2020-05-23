@@ -1,9 +1,7 @@
 #include <iostream>
 #include <SDL.h>
 #include "src/window.h"
-
-// TODO: Game Globals to a game state manager
-bool gameRunning = 0;
+#include "src/gamestate.h"
 
 void render(SDL_Renderer *renderer)
 {
@@ -26,16 +24,18 @@ int main(int argc, char *argv[])
       480,
       SDL_WINDOW_SHOWN);
 
+  Gamestate ganymedeGameState;
+
   if (gameWindow.ready)
   {
-    gameRunning = 1;
+    ganymedeGameState.running = 1;
   }
   else
   {
     std::cout << "Something went wrong launching the game window\n";
   }
 
-  while (gameRunning)
+  while (ganymedeGameState.running)
   {
     render(gameWindow.renderer);
   }

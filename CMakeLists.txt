@@ -12,5 +12,5 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
-add_executable(ganymede main.cpp src/window.cpp)
+add_executable(ganymede main.cpp src/window.cpp src/gamestate.cpp)
 target_link_libraries(ganymede ${SDL2_LIBRARIES})
