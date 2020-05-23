@@ -1,4 +1,7 @@
 #include <iostream>
+#include <utility>
+#include <SDL.h>
+#include <SDL_image.h>
 #include "window.h"
 
 Window::Window(const char *title, int xpos, int ypos, int height, int width, int flags)
@@ -18,4 +21,13 @@ Window::Window(const char *title, int xpos, int ypos, int height, int width, int
   }
 
   ready = true;
+}
+
+void Window::textureLoader(char *name, char *texture)
+{
+  SDL_Surface *tempSurface = IMG_Load(texture);
+  SDL_Texture *newTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+  SDL_FreeSurface(tempSurface);
+
+  textureCache.insert(std::make_pair(name, newTexture));
 }

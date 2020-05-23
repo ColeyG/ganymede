@@ -8,7 +8,7 @@ _Ganymede is my first foray into making a game with sdl2 and c++. I hope to even
 
 The dependencies for linux can be sufficed with the following command:
 
-- `sudo apt install cmake libsdl2-dev g++`
+- `sudo apt install cmake g++ libsdl2-dev libsdl2-image-dev`
 
 Associated scripts for building have been included.
 
