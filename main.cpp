@@ -24,18 +24,18 @@ int main(int argc, char *argv[])
       480,
       SDL_WINDOW_SHOWN);
 
-  Gamestate ganymedeGameState;
+  Gamestate ganymedeGame;
 
   if (gameWindow.ready)
   {
-    ganymedeGameState.running = 1;
+    ganymedeGame.running = 1;
   }
   else
   {
     std::cout << "Something went wrong launching the game window\n";
   }
 
-  while (ganymedeGameState.running)
+  while (ganymedeGame.running)
   {
     render(gameWindow.renderer);
   }
